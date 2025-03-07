@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/TicketsBot-cloud/import-api/config"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/config"
 )
 
 // Twilight's HTTP proxy doesn't support the typical HTTP proxy protocol - instead you send the request directly

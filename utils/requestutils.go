@@ -3,8 +3,8 @@ package utils
 import (
 	"fmt"
 
-	"github.com/TicketsBot-cloud/import-api/log"
 	"github.com/gin-gonic/gin"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/log"
 	"go.uber.org/zap"
 )
 

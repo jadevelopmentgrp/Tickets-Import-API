@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
-	"github.com/TicketsBot-cloud/import-api/database"
-	"github.com/TicketsBot-cloud/import-api/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/database"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/utils"
 )
 
 // UpdateLastSeen We store the last time a user was seen in the dashboard so that we can delete their data if they

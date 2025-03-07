@@ -14,19 +14,16 @@ import (
 	"strconv"
 	"time"
 
-	database2 "github.com/TicketsBot-cloud/database"
-	"github.com/TicketsBot-cloud/import-api/app/http/endpoints/api/export/validator"
-	"github.com/TicketsBot-cloud/import-api/botcontext"
-	"github.com/TicketsBot-cloud/import-api/config"
-	dbclient "github.com/TicketsBot-cloud/import-api/database"
-	"github.com/TicketsBot-cloud/import-api/log"
-	"github.com/TicketsBot-cloud/import-api/rpc"
-	"github.com/TicketsBot-cloud/import-api/s3"
-	"github.com/TicketsBot-cloud/import-api/utils"
-	"github.com/TicketsBot/common/premium"
-	"github.com/TicketsBot/database"
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v4"
+	database "github.com/jadevelopmentgrp/Tickets-Database"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/app/http/endpoints/api/export/validator"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/botcontext"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/config"
+	dbclient "github.com/jadevelopmentgrp/Tickets-Import-API/database"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/log"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/s3"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/utils"
 	"github.com/minio/minio-go/v7"
 	"go.uber.org/zap"
 	"golang.org/x/sync/errgroup"
@@ -194,14 +191,8 @@ func ImportHandler(ctx *gin.Context) {
 		return
 	}
 
-	premiumTier, err := rpc.PremiumClient.GetTierByGuildId(queryCtx, guildId, true, botCtx.Token, botCtx.RateLimiter)
-	if err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
-		return
-	}
-
 	// Get ticket maps
-	mapping, err := dbclient.Client2.ImportMappingTable.GetMapping(queryCtx, guildId)
+	mapping, err := dbclient.Client.ImportMappingTable.GetMapping(queryCtx, guildId)
 	if err != nil {
 		ctx.JSON(500, utils.ErrorJson(err))
 		return
@@ -276,9 +267,6 @@ func ImportHandler(ctx *gin.Context) {
 		// import AutocloseSettings
 		group.Go(func() (err error) {
 			if data.AutocloseSettings != nil {
-				if premiumTier < premium.Premium {
-					data.AutocloseSettings.Enabled = false
-				}
 				if err := dbclient.Client.AutoClose.Set(queryCtx, guildId, *data.AutocloseSettings); err != nil {
 					failedItems = append(failedItems, "Autoclose Settings")
 				} else {
@@ -351,10 +339,6 @@ func ImportHandler(ctx *gin.Context) {
 
 		// Import custom colours
 		group.Go(func() (err error) {
-			if premiumTier < premium.Premium {
-				return
-			}
-
 			failedColours := 0
 
 			for k, v := range data.CustomColors {
@@ -674,7 +658,7 @@ func ImportHandler(ctx *gin.Context) {
 		log.Logger.Info("Importing mapping for forms", zap.Uint64("guild", guildId))
 		for area, m := range map[string]map[int]int{"form": formIdMap} {
 			for sourceId, targetId := range m {
-				if err := dbclient.Client2.ImportMappingTable.Set(queryCtx, guildId, area, sourceId, targetId); err != nil {
+				if err := dbclient.Client.ImportMappingTable.Set(queryCtx, guildId, area, sourceId, targetId); err != nil {
 					ctx.JSON(500, utils.ErrorJson(err))
 					return
 				}
@@ -706,7 +690,7 @@ func ImportHandler(ctx *gin.Context) {
 		log.Logger.Info("Importing mapping for forms inputs", zap.Uint64("guild", guildId))
 		for area, m := range map[string]map[int]int{"form_input": formInputIdMap} {
 			for sourceId, targetId := range m {
-				if err := dbclient.Client2.ImportMappingTable.Set(queryCtx, guildId, area, sourceId, targetId); err != nil {
+				if err := dbclient.Client.ImportMappingTable.Set(queryCtx, guildId, area, sourceId, targetId); err != nil {
 					ctx.JSON(500, utils.ErrorJson(err))
 					return
 				}
@@ -759,11 +743,6 @@ func ImportHandler(ctx *gin.Context) {
 		failedPanels := make([]int, 0)
 		for _, panel := range data.Panels {
 			if _, ok := panelIdMap[panel.PanelId]; !ok {
-				if premiumTier < premium.Premium && panelCount > 2 {
-					panel.ForceDisabled = true
-					panel.Disabled = true
-				}
-
 				if panel.FormId != nil {
 					if failedForms != nil && utils.Contains(failedForms, *panel.FormId) {
 						skippedItems = append(skippedItems, fmt.Sprintf("Panel (ID: %d, missing form)", panel.PanelId))
@@ -817,7 +796,7 @@ func ImportHandler(ctx *gin.Context) {
 		log.Logger.Info("Importing mapping for panels", zap.Uint64("guild", guildId))
 		for area, m := range map[string]map[int]int{"panel": panelIdMap} {
 			for sourceId, targetId := range m {
-				if err := dbclient.Client2.ImportMappingTable.Set(queryCtx, guildId, area, sourceId, targetId); err != nil {
+				if err := dbclient.Client.ImportMappingTable.Set(queryCtx, guildId, area, sourceId, targetId); err != nil {
 					ctx.JSON(500, utils.ErrorJson(err))
 					return
 				}
@@ -972,7 +951,7 @@ func ImportHandler(ctx *gin.Context) {
 			ctx.JSON(500, utils.ErrorJson(err))
 			return
 		}
-		ticketsToCreate := make([]database2.Ticket, len(data.Tickets))
+		ticketsToCreate := make([]database.Ticket, len(data.Tickets))
 		ticketIdMapTwo := make(map[int]int)
 
 		// Import tickets
@@ -984,7 +963,7 @@ func ImportHandler(ctx *gin.Context) {
 					a := panelIdMap[*ticket.PanelId]
 					panelId = &a
 				}
-				ticketsToCreate[i] = database2.Ticket{
+				ticketsToCreate[i] = database.Ticket{
 					Id:               ticket.Id + ticketCount,
 					GuildId:          guildId,
 					ChannelId:        ticket.ChannelId,
@@ -1007,7 +986,7 @@ func ImportHandler(ctx *gin.Context) {
 		}
 
 		log.Logger.Info("Importing tickets", zap.Uint64("guild", guildId))
-		if err := dbclient.Client2.Tickets.BulkImport(queryCtx, guildId, ticketsToCreate); err != nil {
+		if err := dbclient.Client.Tickets.BulkImport(queryCtx, guildId, ticketsToCreate); err != nil {
 			failedItems = append(failedItems, "Tickets")
 		} else {
 			successfulItems = append(successfulItems, "Tickets")
@@ -1017,7 +996,7 @@ func ImportHandler(ctx *gin.Context) {
 		log.Logger.Info("Importing mapping for tickets", zap.Uint64("guild", guildId))
 		for area, m := range map[string]map[int]int{"ticket": ticketIdMapTwo} {
 			for sourceId, targetId := range m {
-				if err := dbclient.Client2.ImportMappingTable.Set(queryCtx, guildId, area, sourceId, targetId); err != nil {
+				if err := dbclient.Client.ImportMappingTable.Set(queryCtx, guildId, area, sourceId, targetId); err != nil {
 					ctx.JSON(500, utils.ErrorJson(err))
 					return
 				}
@@ -1037,7 +1016,7 @@ func ImportHandler(ctx *gin.Context) {
 				newMembersMap[ticketIdMap[ticketId]] = members
 			}
 
-			if err := dbclient.Client2.TicketMembers.ImportBulk(queryCtx, guildId, newMembersMap); err != nil {
+			if err := dbclient.Client.TicketMembers.ImportBulk(queryCtx, guildId, newMembersMap); err != nil {
 				failedItems = append(failedItems, "Ticket Additional Members")
 			} else {
 				successfulItems = append(successfulItems, "Ticket Additional Members")
@@ -1049,13 +1028,13 @@ func ImportHandler(ctx *gin.Context) {
 		// Import ticket last messages
 		ticketsExtrasGroup.Go(func() (err error) {
 			log.Logger.Info("Importing ticket last messages", zap.Uint64("guild", guildId))
-			msgs := map[int]database2.TicketLastMessage{}
+			msgs := map[int]database.TicketLastMessage{}
 			for _, msg := range data.TicketLastMessages {
 				if _, ok := ticketIdMap[msg.TicketId]; !ok {
 					continue
 				}
 
-				msgs[ticketIdMap[msg.TicketId]] = database2.TicketLastMessage{
+				msgs[ticketIdMap[msg.TicketId]] = database.TicketLastMessage{
 					LastMessageId:   msg.Data.LastMessageId,
 					LastMessageTime: msg.Data.LastMessageTime,
 					UserId:          msg.Data.UserId,
@@ -1063,7 +1042,7 @@ func ImportHandler(ctx *gin.Context) {
 				}
 			}
 
-			if err := dbclient.Client2.TicketLastMessage.ImportBulk(queryCtx, guildId, msgs); err != nil {
+			if err := dbclient.Client.TicketLastMessage.ImportBulk(queryCtx, guildId, msgs); err != nil {
 				failedItems = append(failedItems, "Ticket Last Messages")
 			} else {
 				successfulItems = append(successfulItems, "Ticket Last Messages")
@@ -1081,7 +1060,7 @@ func ImportHandler(ctx *gin.Context) {
 				newClaimsMap[ticketIdMap[ticketId]] = user.Data
 			}
 
-			if err := dbclient.Client2.TicketClaims.ImportBulk(queryCtx, guildId, newClaimsMap); err != nil {
+			if err := dbclient.Client.TicketClaims.ImportBulk(queryCtx, guildId, newClaimsMap); err != nil {
 				failedItems = append(failedItems, "Ticket Claims")
 			} else {
 				successfulItems = append(successfulItems, "Ticket Claims")
@@ -1100,7 +1079,7 @@ func ImportHandler(ctx *gin.Context) {
 				newRatingsMap[ticketIdMapTwo[ticketId]] = uint8(rating.Data)
 			}
 
-			if err := dbclient.Client2.ServiceRatings.ImportBulk(queryCtx, guildId, newRatingsMap); err != nil {
+			if err := dbclient.Client.ServiceRatings.ImportBulk(queryCtx, guildId, newRatingsMap); err != nil {
 				failedItems = append(failedItems, "Ticket Ratings")
 			} else {
 				successfulItems = append(successfulItems, "Ticket Ratings")
@@ -1119,7 +1098,7 @@ func ImportHandler(ctx *gin.Context) {
 				newParticipantsMap[ticketIdMapTwo[ticketId]] = participants
 			}
 
-			if err := dbclient.Client2.Participants.ImportBulk(queryCtx, guildId, newParticipantsMap); err != nil {
+			if err := dbclient.Client.Participants.ImportBulk(queryCtx, guildId, newParticipantsMap); err != nil {
 				failedItems = append(failedItems, "Ticket Participants")
 			} else {
 				successfulItems = append(successfulItems, "Ticket Participants")

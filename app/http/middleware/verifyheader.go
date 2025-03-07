@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"github.com/TicketsBot-cloud/import-api/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/utils"
 )
 
 func VerifyXTicketsHeader(ctx *gin.Context) {

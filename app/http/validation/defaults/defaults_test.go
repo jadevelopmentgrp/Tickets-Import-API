@@ -3,7 +3,7 @@ package defaults
 import (
 	"testing"
 
-	"github.com/TicketsBot-cloud/import-api/utils"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/utils"
 	"github.com/stretchr/testify/assert"
 )
 

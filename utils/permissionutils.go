@@ -4,11 +4,12 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/TicketsBot-cloud/import-api/botcontext"
-	dbclient "github.com/TicketsBot-cloud/import-api/database"
-	"github.com/TicketsBot-cloud/import-api/internal/api"
-	"github.com/TicketsBot/common/permission"
-	"github.com/TicketsBot/database"
+	"github.com/jadevelopmentgrp/Tickets-Utilities/permission"
+
+	database "github.com/jadevelopmentgrp/Tickets-Database"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/botcontext"
+	dbclient "github.com/jadevelopmentgrp/Tickets-Import-API/database"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/internal/api"
 	"github.com/rxdn/gdl/objects/member"
 )
 

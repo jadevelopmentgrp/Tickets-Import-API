@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/TicketsBot-cloud/import-api/config"
-	"github.com/TicketsBot-cloud/import-api/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/config"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/utils"
 )
 
 func AuthenticateToken(ctx *gin.Context) {

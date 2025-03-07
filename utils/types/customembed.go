@@ -1,8 +1,8 @@
 package types
 
 import (
-	"github.com/TicketsBot-cloud/import-api/utils"
-	"github.com/TicketsBot/database"
+	database "github.com/jadevelopmentgrp/Tickets-Database"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/utils"
 	"github.com/rxdn/gdl/objects/channel/embed"
 )
 

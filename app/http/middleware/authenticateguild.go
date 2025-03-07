@@ -5,10 +5,11 @@ import (
 	"errors"
 	"strconv"
 
-	"github.com/TicketsBot-cloud/import-api/rpc/cache"
-	"github.com/TicketsBot-cloud/import-api/utils"
-	"github.com/TicketsBot/common/permission"
+	"github.com/jadevelopmentgrp/Tickets-Utilities/permission"
+
 	"github.com/gin-gonic/gin"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/rpc/cache"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/utils"
 	cache2 "github.com/rxdn/gdl/cache"
 )
 

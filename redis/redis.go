@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/TicketsBot-cloud/import-api/config"
 	"github.com/go-redis/redis/v8"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/config"
 )
 
 type RedisClient struct {

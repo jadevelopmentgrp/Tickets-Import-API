@@ -3,8 +3,8 @@ package middleware
 import (
 	"strconv"
 
-	"github.com/TicketsBot-cloud/import-api/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/utils"
 )
 
 func ParseGuildId(ctx *gin.Context) {

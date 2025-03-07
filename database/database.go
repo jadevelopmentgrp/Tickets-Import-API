@@ -3,19 +3,17 @@ package database
 import (
 	"context"
 
-	database2 "github.com/TicketsBot-cloud/database"
-	"github.com/TicketsBot-cloud/import-api/config"
-	"github.com/TicketsBot/database"
 	"github.com/jackc/pgconn"
 	"github.com/jackc/pgconn/stmtcache"
 	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/log/logrusadapter"
 	"github.com/jackc/pgx/v4/pgxpool"
+	database "github.com/jadevelopmentgrp/Tickets-Database"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/config"
 	"github.com/sirupsen/logrus"
 )
 
 var Client *database.Database
-var Client2 *database2.Database
 
 func ConnectToDatabase() {
 	config, err := pgxpool.ParseConfig(config.Conf.Database.Uri)
@@ -23,7 +21,6 @@ func ConnectToDatabase() {
 		panic(err)
 	}
 
-	// TODO: Sentry
 	config.ConnConfig.LogLevel = pgx.LogLevelWarn
 	config.ConnConfig.Logger = logrusadapter.NewLogger(logrus.New())
 
@@ -40,5 +37,4 @@ func ConnectToDatabase() {
 	}
 
 	Client = database.NewDatabase(pool)
-	Client2 = database2.NewDatabase(pool)
 }

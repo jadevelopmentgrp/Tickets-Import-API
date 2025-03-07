@@ -9,21 +9,15 @@ import (
 )
 
 type Config struct {
-	Admins          []uint64      `env:"ADMINS"`
-	ForceWhitelabel []uint64      `env:"FORCED_WHITELABEL"`
-	Debug           bool          `env:"DEBUG"`
-	SentryDsn       *string       `env:"SENTRY_DSN"`
-	JsonLogs        bool          `env:"JSON_LOGS" envDefault:"false"`
-	LogLevel        zapcore.Level `env:"LOG_LEVEL" envDefault:"info"`
-	Server          struct {
-		Host       string `env:"SERVER_ADDR,required"`
-		MetricHost string `env:"METRIC_SERVER_ADDR"`
-		BaseUrl    string `env:"BASE_URL,required"`
-		MainSite   string `env:"MAIN_SITE,required"`
-		Ratelimit  struct {
-			Window int `env:"WINDOW,required"`
-			Max    int `env:"MAX,required"`
-		} `envPrefix:"RATELIMIT_"`
+	Admins   []uint64      `env:"ADMINS"`
+	Debug    bool          `env:"DEBUG"`
+	JsonLogs bool          `env:"JSON_LOGS" envDefault:"false"`
+	LogLevel zapcore.Level `env:"LOG_LEVEL" envDefault:"info"`
+	Server   struct {
+		Host           string   `env:"SERVER_ADDR,required"`
+		MetricHost     string   `env:"METRIC_SERVER_ADDR"`
+		BaseUrl        string   `env:"BASE_URL,required"`
+		MainSite       string   `env:"MAIN_SITE,required"`
 		Secret         string   `env:"JWT_SECRET,required"`
 		RealIpHeaders  []string `env:"REAL_IP_HEADERS"`
 		TrustedProxies []string `env:"TRUSTED_PROXIES"`

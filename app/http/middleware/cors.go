@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/TicketsBot-cloud/import-api/config"
 	"github.com/gin-gonic/gin"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/config"
 )
 
 func Cors(config config.Config) func(*gin.Context) {

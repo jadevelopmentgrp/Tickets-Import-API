@@ -3,8 +3,8 @@ package cache
 import (
 	"context"
 
-	"github.com/TicketsBot-cloud/import-api/config"
 	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/config"
 	gdlcache "github.com/rxdn/gdl/cache"
 )
 

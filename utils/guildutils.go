@@ -7,12 +7,13 @@ import (
 	"slices"
 	"sync"
 
-	dbclient "github.com/TicketsBot-cloud/import-api/database"
-	"github.com/TicketsBot-cloud/import-api/rpc/cache"
-	"github.com/TicketsBot/common/collections"
-	"github.com/TicketsBot/common/permission"
-	"github.com/TicketsBot/database"
+	"github.com/jadevelopmentgrp/Tickets-Utilities/collections"
+	"github.com/jadevelopmentgrp/Tickets-Utilities/permission"
+
 	"github.com/jackc/pgtype"
+	database "github.com/jadevelopmentgrp/Tickets-Database"
+	dbclient "github.com/jadevelopmentgrp/Tickets-Import-API/database"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/rpc/cache"
 	"github.com/rxdn/gdl/objects/guild"
 	"github.com/rxdn/gdl/rest"
 	errgroup "golang.org/x/sync/errgroup"

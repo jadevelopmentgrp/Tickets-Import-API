@@ -3,12 +3,13 @@ package http
 import (
 	"time"
 
-	api_import "github.com/TicketsBot-cloud/import-api/app/http/endpoints/api/export"
-	"github.com/TicketsBot-cloud/import-api/app/http/middleware"
-	"github.com/TicketsBot-cloud/import-api/app/http/session"
-	"github.com/TicketsBot-cloud/import-api/config"
-	"github.com/TicketsBot/common/permission"
+	"github.com/jadevelopmentgrp/Tickets-Utilities/permission"
+
 	"github.com/gin-gonic/gin"
+	api_import "github.com/jadevelopmentgrp/Tickets-Import-API/app/http/endpoints/api/export"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/app/http/middleware"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/app/http/session"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/config"
 	"github.com/penglongli/gin-metrics/ginmetrics"
 	"go.uber.org/zap"
 )

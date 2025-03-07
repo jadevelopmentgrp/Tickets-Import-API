@@ -3,7 +3,7 @@ package validator
 import (
 	"time"
 
-	"github.com/TicketsBot/database"
+	database "github.com/jadevelopmentgrp/Tickets-Database"
 )
 
 type TicketUnion[T any] struct {

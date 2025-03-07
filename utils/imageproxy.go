@@ -4,9 +4,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/TicketsBot-cloud/import-api/config"
 	"github.com/golang-jwt/jwt"
 	"github.com/google/uuid"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/config"
 )
 
 func GenerateImageProxyToken(imageUrl string) (string, error) {

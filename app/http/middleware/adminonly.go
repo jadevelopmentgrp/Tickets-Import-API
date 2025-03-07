@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"github.com/TicketsBot-cloud/import-api/config"
-	"github.com/TicketsBot-cloud/import-api/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/config"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/utils"
 )
 
 func AdminOnly(ctx *gin.Context) {

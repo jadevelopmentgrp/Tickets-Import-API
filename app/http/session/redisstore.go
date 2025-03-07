@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"time"
 
-	wrapper "github.com/TicketsBot-cloud/import-api/redis"
 	"github.com/go-redis/redis/v8"
+	wrapper "github.com/jadevelopmentgrp/Tickets-Import-API/redis"
 )
 
 var ErrNoSession = errors.New("no session data found")

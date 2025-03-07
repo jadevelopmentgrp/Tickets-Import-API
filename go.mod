@@ -1,4 +1,4 @@
-module github.com/TicketsBot-cloud/import-api
+module github.com/jadevelopmentgrp/Tickets-Import-API
 
 go 1.22.6
 
@@ -6,14 +6,8 @@ go 1.22.6
 
 require (
 	github.com/BurntSushi/toml v1.2.1
-	github.com/TicketsBot-cloud/archiverclient v0.0.0-20250206203822-d4f91573ad70
-	github.com/TicketsBot-cloud/database v0.0.0-20250215204312-d433be0833c9
-	github.com/TicketsBot/common v0.0.0-20241117150316-ff54c97b45c1
-	github.com/TicketsBot/database v0.0.0-20250205194156-c8239ae6eb4e
-	github.com/TicketsBot/worker v0.0.0-20241117155137-89dec1fd9a11
 	github.com/apex/log v1.1.2
 	github.com/caarlos0/env/v11 v11.2.2
-	github.com/getsentry/sentry-go v0.24.0
 	github.com/gin-gonic/contrib v0.0.0-20191209060500-d6e26eeaa607
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-playground/validator/v10 v10.14.0
@@ -25,6 +19,10 @@ require (
 	github.com/jackc/pgconn v1.14.3
 	github.com/jackc/pgtype v1.14.4
 	github.com/jackc/pgx/v4 v4.18.3
+	github.com/jadevelopmentgrp/Tickets-Archiver-Client v1.0.1
+	github.com/jadevelopmentgrp/Tickets-Database v1.0.8
+	github.com/jadevelopmentgrp/Tickets-Utilities v1.0.2
+	github.com/jadevelopmentgrp/Tickets-Worker v1.5.1
 	github.com/joho/godotenv v1.5.1
 	github.com/minio/minio-go/v7 v7.0.85
 	github.com/penglongli/gin-metrics v0.1.10
@@ -39,9 +37,6 @@ require (
 require (
 	github.com/ClickHouse/ch-go v0.52.1 // indirect
 	github.com/ClickHouse/clickhouse-go/v2 v2.10.0 // indirect
-	github.com/TicketsBot-cloud/common v0.0.0-20250208140430-b5da1dd487b3 // indirect
-	github.com/TicketsBot/analytics-client v0.0.0-20240724103359-30f5dac821e6 // indirect
-	github.com/TicketsBot/logarchiver v0.0.0-20241012220745-5f3ba17a5138 // indirect
 	github.com/TicketsBot/ttlcache v1.6.1-0.20200405150101-acc18e37b261 // indirect
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
@@ -56,9 +51,9 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
+	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.3 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/go-errors/errors v1.4.2 // indirect
 	github.com/go-faster/city v1.0.1 // indirect
 	github.com/go-faster/errors v0.6.1 // indirect
 	github.com/go-ini/ini v1.67.0 // indirect
@@ -69,7 +64,6 @@ require (
 	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/securecookie v1.1.1 // indirect
 	github.com/gorilla/sessions v1.2.1 // indirect
-	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
@@ -79,6 +73,8 @@ require (
 	github.com/jackc/pgx/v5 v5.6.0 // indirect
 	github.com/jackc/puddle v1.3.0 // indirect
 	github.com/jackc/puddle/v2 v2.2.1 // indirect
+	github.com/jadevelopmentgrp/Tickets-Analytics v1.0.0 // indirect
+	github.com/jadevelopmentgrp/Tickets-Archiver v1.0.3 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/juju/ratelimit v1.0.2 // indirect
 	github.com/klauspost/compress v1.17.11 // indirect
@@ -109,6 +105,7 @@ require (
 	go.opentelemetry.io/otel v1.24.0 // indirect
 	go.opentelemetry.io/otel/trace v1.24.0 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
+	go.uber.org/goleak v1.1.12 // indirect
 	go.uber.org/multierr v1.9.0 // indirect
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/crypto v0.33.0 // indirect
@@ -118,5 +115,5 @@ require (
 	golang.org/x/text v0.22.0 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	nhooyr.io/websocket v1.8.4 // indirect
+	nhooyr.io/websocket v1.8.17 // indirect
 )

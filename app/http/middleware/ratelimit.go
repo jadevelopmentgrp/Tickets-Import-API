@@ -6,10 +6,10 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/TicketsBot-cloud/import-api/redis"
-	"github.com/TicketsBot-cloud/import-api/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis_rate/v9"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/redis"
+	"github.com/jadevelopmentgrp/Tickets-Import-API/utils"
 )
 
 type RateLimitType uint8
